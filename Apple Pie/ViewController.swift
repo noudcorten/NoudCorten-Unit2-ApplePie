@@ -64,7 +64,6 @@ class ViewController: UIViewController {
         } else if currentGame.word == currentGame.formattedWord {
             totalWins += 1
         }
-        
         updateUI()
     }
 
