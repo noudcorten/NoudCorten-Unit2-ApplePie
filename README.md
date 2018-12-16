@@ -6,5 +6,7 @@
 * Updates the word label 
 * Updates the score
 
-![Apple Tree](https://github.com/noudcorten/NoudCorten-Unit2-ApplePie/blob/master/AppleTree.png)
+<p float="left">
+  <img src="https://github.com/noudcorten/NoudCorten-Unit2-ApplePie/blob/master/AppleTree.png" width="400" height="400"/>
+</p>
       
