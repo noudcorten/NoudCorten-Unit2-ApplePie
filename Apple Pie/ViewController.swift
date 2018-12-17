@@ -10,23 +10,32 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // MARK: Properties
+    @IBOutlet var letterButtons: [UIButton]!
+    @IBOutlet weak var treeImageView: UIImageView!
+    @IBOutlet weak var correctWordLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    
     var listOfWords = ["buccaneer", "swift", "glorious",
     "incandescent", "bug", "program"]
-    
     let incorrectMovesAllowed = 7
-    var totalWins = 0 {
-        didSet {
-            newRound()
-        }
-    }
-    var totalLosses = 0 {
-        didSet {
-            newRound()
-        }
-    }
-    
     var currentGame: Game!
     
+    // MARK: if the user has guessed a word right or wrong, it calls the newRound() function
+    var totalWins = 0 {
+        didSet { newRound() }
+    }
+    var totalLosses = 0 {
+        didSet { newRound() }
+    }
+    
+    // MARK: when the game starts it updates the UI accordinly
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        newRound()
+    }
+    
+    // MARK: this function creates a new word interface if there is a word left in list
     func newRound() {
         if !listOfWords.isEmpty {
             let newWord = listOfWords.removeFirst()
@@ -40,13 +49,14 @@ class ViewController: UIViewController {
         }
     }
     
+    // enables or disables all the buttons
     func enableLetterButtons(_ enable: Bool) {
         for button in letterButtons {
             button.isEnabled = enable
         }
     }
 
-    
+    // MARK: creates the view for the apple tree and updates the image of the tree according to the amount of guesses left
     func updateUI() {
         var letters = [String]()
         for letter in currentGame.formattedWord.characters {
@@ -58,6 +68,7 @@ class ViewController: UIViewController {
         treeImageView.image = UIImage(named: "Tree \(currentGame.incorrectMovesRemaining)")
     }
     
+    // MARK: sets the amount of wins or losses accordingly
     func updateGameState() {
         if currentGame.incorrectMovesRemaining == 0 {
             totalLosses += 1
@@ -67,12 +78,7 @@ class ViewController: UIViewController {
         updateUI()
     }
 
-    
-    @IBOutlet var letterButtons: [UIButton]!
-    @IBOutlet weak var treeImageView: UIImageView!
-    @IBOutlet weak var correctWordLabel: UILabel!
-    @IBOutlet weak var scoreLabel: UILabel!
-    
+    // MARK: checks if the pressed button is a letter in the word and updates the UI accordingly
     @IBAction func buttonPressed(_ sender: UIButton) {
         sender.isEnabled = false
         let letterString = sender.title(for: .normal)!
@@ -80,12 +86,7 @@ class ViewController: UIViewController {
         currentGame.playerGuessed(letter: letter)
         updateGameState()
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        newRound()
-    }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
